@@ -25,7 +25,8 @@
 
         public void RegisterSingleton<T>()
         {
-            var implementation = Activator.CreateInstance<T>(); //tech dont have to init, we could init when its first called for improved performance
+            //tech dont have to init, we could init when its first called for improved performance
+            var implementation = Activator.CreateInstance<T>(); 
             if (implementation == null) throw new Exception($"{typeof(T).Name} needs a constructor");
 
             var success = _services.TryAdd(typeof(T), new Service()
