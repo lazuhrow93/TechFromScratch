@@ -8,7 +8,7 @@ namespace DependencyInjection
     {
         static void Main(string[] args)
         {
-            var services = new DIServiceCollection();
+            var services = new DIProvider();
 
             var fooServiceSingleton = new FooService();
 

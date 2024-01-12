@@ -1,10 +1,10 @@
 ﻿namespace DependencyInjection.Tools
 {
-    public class DIServiceCollection
+    public class DIProvider
     {
         private Dictionary<Type, Service> _services;
 
-        public DIServiceCollection()
+        public DIProvider()
         {
             _services = new();
         }
