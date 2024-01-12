@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/DependencyInjection/.vs/DependencyInjection
+/DependencyInjection/bin/Debug/net6.0
+/DependencyInjection/obj
+/DependencyInjection/DependencyInjection.sln
+/DependencyInjection/DependencyInjection.csproj
