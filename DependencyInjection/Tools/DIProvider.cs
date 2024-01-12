@@ -64,5 +64,11 @@
                     throw new Exception($"IDK, something happened");
             }
         }
+
+        public void RegisterSingleton<TInterface, TImplementation>()
+        {
+            if(typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
+                throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
+        }
     }
 }

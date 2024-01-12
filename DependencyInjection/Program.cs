@@ -1,6 +1,8 @@
 ﻿using DependencyInjection.Tools;
 using DependencyInjection.Services;
 using System;
+using DependencyInjection.Services.Interfaces;
+using DependencyInjection.Services.Implementations;
 
 namespace DependencyInjection
 {
@@ -45,6 +47,10 @@ namespace DependencyInjection
 
             Console.WriteLine(hooService1.RandomGuid);
             Console.WriteLine(hooService2.RandomGuid);
+
+            //Futher Singleton Things
+            services.RegisterSingleton<IDummyService, DummyOneService>();
+
 
         }
     }
