@@ -8,6 +8,6 @@ namespace DependencyInjection.Services.Interfaces
 {
     public interface IDummyService
     {
-        public string PrintStoredNumber();
+        public void PrintStoredNumber();
     }
 }
