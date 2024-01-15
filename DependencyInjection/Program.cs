@@ -11,11 +11,18 @@ namespace DependencyInjection
         static void Main(string[] args)
         {
             var services = new DIProvider();
+            //ProveSingletonWithImplementation(services);
+            //ProveTransient(services);
+            //ProveSingletonWithoutImplemenation(services);
+            ProveSingletonWithInterface(services);
+            //Futher Singleton Things
+        }
 
+        public static void ProveSingletonWithImplementation(DIProvider services)
+        {
             var fooServiceSingleton = new FooService();
 
             services.RegisterSingleton<FooService>(fooServiceSingleton);
-            //services.RegisterTransient<FooService>();
 
             //since its singleton, should be the same time
             var service = services.GetService<FooService>();
@@ -26,11 +33,15 @@ namespace DependencyInjection
             Console.WriteLine(service2.RandomGuid);
 
             Console.WriteLine("");
+        }
+
+        public static void ProveTransient(DIProvider services)
+        {
             Console.WriteLine("----------------Transient-------------------");
 
             //since transient, should be two differnet Guids
             services.RegisterTransient<GooService>();
-            var gooServiceTransient1 = services.GetService<GooService>(); 
+            var gooServiceTransient1 = services.GetService<GooService>();
             var gooServiceTransient2 = services.GetService<GooService>();
 
             Console.WriteLine(gooServiceTransient1.RandomGuid);
@@ -38,6 +49,11 @@ namespace DependencyInjection
 
 
             Console.WriteLine("");
+
+        }
+
+        public static void ProveSingletonWithoutImplemenation(DIProvider services)
+        {
             Console.WriteLine("------Singleton without implementation------");
             //singleton, without providing implemenation
             services.RegisterSingleton<HooService>();
@@ -47,10 +63,17 @@ namespace DependencyInjection
 
             Console.WriteLine(hooService1.RandomGuid);
             Console.WriteLine(hooService2.RandomGuid);
+        }
 
-            //Futher Singleton Things
+        public static void ProveSingletonWithInterface(DIProvider services)
+        {
+
             services.RegisterSingleton<IDummyService, DummyOneService>();
+            var dummyService1 = services.GetService<IDummyService>();
+            var dummyService2 = services.GetService<IDummyService>();
 
+            dummyService1.PrintStoredNumber();
+            dummyService2.PrintStoredNumber();
 
         }
     }

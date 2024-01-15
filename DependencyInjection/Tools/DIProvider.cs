@@ -15,7 +15,7 @@
 
             var success = _services.TryAdd(typeof(T), new Service()
             {
-                Type = typeof(T),
+                TypeOfImplementation = typeof(T),
                 Implementation = Implementation,
                 Life = Life.Singleton
             });
@@ -31,7 +31,7 @@
 
             var success = _services.TryAdd(typeof(T), new Service()
             {
-                Type = typeof(T),
+                TypeOfImplementation = typeof(T),
                 Implementation = implementation,
                 Life = Life.Singleton
             });
@@ -43,7 +43,7 @@
         {
             var success = _services.TryAdd(typeof(T), new Service()
             {
-                Type = typeof(T),
+                TypeOfImplementation = typeof(T),
                 Implementation = null, //at the time of call
                 Life = Life.Transient
             });
@@ -67,8 +67,33 @@
 
         public void RegisterSingleton<TInterface, TImplementation>()
         {
-            if(typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
+            if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
                 throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
+            
+            var userImplementation = Activator.CreateInstance(typeof(TImplementation));
+            if (userImplementation is null) throw new Exception($"Provide at least an empty ctor for {typeof(TImplementation).Name}");
+            
+            _services[typeof(TInterface)] = new Service()
+            {
+                TypeOfInterface = typeof(TInterface),
+                TypeOfImplementation = typeof(TImplementation),
+                Implementation = userImplementation,
+                Life = Life.Singleton
+            };
+        }
+
+        public void RegisterTransient<TInterface, TImplementation>()
+        {
+            if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
+                throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
+            
+            _services[typeof(TInterface)] = new Service()
+            {
+                TypeOfInterface = typeof(TInterface),
+                TypeOfImplementation = typeof(TInterface),
+                Implementation = null,
+                Life = Life.Transient
+            };
         }
     }
 }

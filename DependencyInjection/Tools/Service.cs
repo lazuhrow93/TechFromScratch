@@ -8,8 +8,9 @@ namespace DependencyInjection.Tools
 {
     public class Service
     {
-        public object Implementation { get; set; }
-        public Type Type { get; set; }
+        public object? Implementation { get; set; }
+        public Type TypeOfImplementation { get; set; }
+        public Type TypeOfInterface { get; set; }
         public Life Life { get; set; }
     }
 

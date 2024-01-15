@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DependencyInjection.Services.Interfaces
 {
-    public interface IooService
+    public interface IDummyService
     {
-        public void PrintStoredNumber();
+        public string PrintStoredNumber();
     }
 }
