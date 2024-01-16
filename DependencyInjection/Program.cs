@@ -17,7 +17,8 @@ namespace DependencyInjection
             //ProveSingletonWithoutImplemenation(services);
             //ProveTransient(services);
             //ProveSingletonWithInterface(container);
-            ProveTransientWithInterface(container);
+            //ProveTransientWithInterface(container);
+            ProveNestedSingletonsWithInterface(container);
 
         }
 
@@ -99,6 +100,21 @@ namespace DependencyInjection
             container.RegisterTransient<IDummyService, DummyOneService>();
 
             var provider = container.GetProvider();
+            var instance1 = provider.GetService<IDummyService>();
+            var instance2 = provider.GetService<IDummyService>();
+            var instance3 = provider.GetService<IDummyService>();
+
+            instance1.PrintStoredNumber();
+            instance2.PrintStoredNumber();
+            instance3.PrintStoredNumber();
+        }
+
+        public static void ProveNestedSingletonsWithInterface(DIContainer container)
+        {
+            container.RegisterSingleton<IDummyService, DummyTwoService>(); //DummyTwoService needs a IGuidProvider
+            container.RegisterSingleton<IRandomGuidProvider, RandomGuidProvider>(); //DummyTwoService needs a IGuidProvider
+            var provider = container.GetProvider();
+
             var instance1 = provider.GetService<IDummyService>();
             var instance2 = provider.GetService<IDummyService>();
             var instance3 = provider.GetService<IDummyService>();

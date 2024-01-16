@@ -9,22 +9,29 @@ namespace DependencyInjection.Services.Implementations
 {
     public class DummyTwoService : IDummyService
     {
-        private Guid Guid { get; set; } = Guid.NewGuid();
-        private Guid Guid2 { get; set; } = Guid.NewGuid();
+        private readonly IRandomGuidProvider _guidProvider;
+        private int Refreshes { get; set; } = 0;
+        
+        public DummyTwoService(IRandomGuidProvider guidprovider)
+        {
+            _guidProvider = guidprovider;        
+        }
 
         public void PrintStoredNumber()
         {
-            throw new NotImplementedException();
+            Console.WriteLine(_guidProvider.RandomGuid);
         }
 
         public void Refresh()
         {
-            throw new NotImplementedException();
+            _guidProvider.RandomGuid = Guid.NewGuid();
+            ++Refreshes;
+
         }
 
         public void TotalRefreshes()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Refreshes: {Refreshes}");
         }
     }
 }

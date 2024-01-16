@@ -27,11 +27,10 @@ namespace DependencyInjection.Tools
         {
             if (typeof(T).IsInterface) throw new Exception($"You need to provide an implementation type for the interface {typeof(T).Name}. Use RegisterSingleton<TInteface, TImplementation> instead.");
 
-            if (Implementation is null) throw new Exception($"The {typeof(T).Name} is not implemented");
             var success = _services.TryAdd(typeof(T), new Service()
             {
                 TypeOfImplementation = typeof(T),
-                Implementation = Implementation,
+                Implementation = null,
                 Life = Life.Singleton
             });
 
@@ -42,14 +41,10 @@ namespace DependencyInjection.Tools
         {
             if (typeof(T).IsInterface) throw new Exception($"You need to provide an implementation type for the interface {typeof(T).Name}. Use RegisterSingleton<TInteface, TImplementation> instead.");
 
-            //tech dont have to init, we could init when its first called for improved performance
-            var implementation = Activator.CreateInstance<T>();
-            if (implementation == null) throw new Exception($"{typeof(T).Name} needs a constructor");
-
             var success = _services.TryAdd(typeof(T), new Service()
             {
                 TypeOfImplementation = typeof(T),
-                Implementation = implementation,
+                Implementation = null,
                 Life = Life.Singleton
             });
 
@@ -61,14 +56,11 @@ namespace DependencyInjection.Tools
             if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
                 throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
 
-            var userImplementation = Activator.CreateInstance(typeof(TImplementation)); //maybe only instantiate when its called
-            if (userImplementation is null) throw new Exception($"Provide at least an empty ctor for {typeof(TImplementation).Name}");
-
             _services[typeof(TInterface)] = new Service()
             {
                 TypeOfInterface = typeof(TInterface),
                 TypeOfImplementation = typeof(TImplementation),
-                Implementation = userImplementation,
+                Implementation = null,
                 Life = Life.Singleton
             };
         }
