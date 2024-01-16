@@ -16,8 +16,9 @@ namespace DependencyInjection
             //ProveSingletonWithImplementation(services);
             //ProveSingletonWithoutImplemenation(services);
             //ProveTransient(services);
-            ProveSingletonWithInterface(container);
-            //Futher Singleton Things
+            //ProveSingletonWithInterface(container);
+            ProveTransientWithInterface(container);
+
         }
 
         public static void ProveSingletonWithImplementation(DIContainer container)
@@ -91,6 +92,20 @@ namespace DependencyInjection
             dummyService1.PrintStoredNumber();
             dummyService1.TotalRefreshes();
 
+        }
+
+        public static void ProveTransientWithInterface(DIContainer container)
+        {
+            container.RegisterTransient<IDummyService, DummyOneService>();
+
+            var provider = container.GetProvider();
+            var instance1 = provider.GetService<IDummyService>();
+            var instance2 = provider.GetService<IDummyService>();
+            var instance3 = provider.GetService<IDummyService>();
+
+            instance1.PrintStoredNumber();
+            instance2.PrintStoredNumber();
+            instance3.PrintStoredNumber();
         }
     }
 }

@@ -93,7 +93,7 @@ namespace DependencyInjection.Tools
             _services[typeof(TInterface)] = new Service()
             {
                 TypeOfInterface = typeof(TInterface),
-                TypeOfImplementation = typeof(TInterface),
+                TypeOfImplementation = typeof(TImplementation),
                 Implementation = null,
                 Life = Life.Transient
             };
