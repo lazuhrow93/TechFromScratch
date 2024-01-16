@@ -7,27 +7,24 @@ using System.Threading.Tasks;
 
 namespace DependencyInjection.Services.Implementations
 {
-    internal class DummyOneService : IDummyService
+    public class DummyTwoService : IDummyService
     {
-        public int Randomized { get; set; } = 0;
         private Guid Guid { get; set; } = Guid.NewGuid();
-
-        public DummyOneService() { }
+        private Guid Guid2 { get; set; } = Guid.NewGuid();
 
         public void PrintStoredNumber()
         {
-            Console.WriteLine(Guid);
-        }
-
-        public void TotalRefreshes()
-        {
-            Console.WriteLine($"Random : {Randomized}");
+            throw new NotImplementedException();
         }
 
         public void Refresh()
         {
-            Guid = Guid.NewGuid();
-            ++Randomized;
+            throw new NotImplementedException();
+        }
+
+        public void TotalRefreshes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

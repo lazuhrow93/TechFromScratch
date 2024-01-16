@@ -9,91 +9,27 @@
             _services = new();
         }
 
-        public void RegisterSingleton<T>(T Implementation)
+        public DIProvider(Dictionary<Type, Service> services)
         {
-            if (Implementation is null) throw new Exception($"The {typeof(T).Name} is not implemented");
-
-            var success = _services.TryAdd(typeof(T), new Service()
-            {
-                TypeOfImplementation = typeof(T),
-                Implementation = Implementation,
-                Life = Life.Singleton
-            });
-
-            if(success == false) throw new Exception($"The {typeof(T).Name} is already registered as Singleton");
-        }
-
-        public void RegisterSingleton<T>()
-        {
-            //tech dont have to init, we could init when its first called for improved performance
-            var implementation = Activator.CreateInstance<T>(); 
-            if (implementation == null) throw new Exception($"{typeof(T).Name} needs a constructor");
-
-            var success = _services.TryAdd(typeof(T), new Service()
-            {
-                TypeOfImplementation = typeof(T),
-                Implementation = implementation,
-                Life = Life.Singleton
-            });
-
-            if (success == false) throw new Exception($"The {typeof(T).Name} is already registered as Singleton");
-        }
-
-        public void RegisterTransient<T>()
-        {
-            var success = _services.TryAdd(typeof(T), new Service()
-            {
-                TypeOfImplementation = typeof(T),
-                Implementation = null, //at the time of call
-                Life = Life.Transient
-            });
-
-            if (success == false) throw new Exception($"{typeof(T).Name} is already registered as Transient.");
+            _services = services;
         }
 
         public T? GetService<T>()
         {
-            var service = _services[typeof(T)];
-            switch (service.Life)
+            
+            var serviceInfo = _services[typeof(T)];
+            var isInterface = typeof(T).IsInterface;
+            var typeOfImplementation = (isInterface) ? serviceInfo.TypeOfImplementation : typeof(T);
+
+            switch (serviceInfo.Life)
             {
                 case Life.Transient:
-                    return Activator.CreateInstance<T>();
+                    return (T)Activator.CreateInstance(typeOfImplementation);
                 case Life.Singleton:
-                    return (T)service.Implementation;
+                    return (T)serviceInfo.Implementation;
                 default:
                     throw new Exception($"IDK, something happened");
             }
-        }
-
-        public void RegisterSingleton<TInterface, TImplementation>()
-        {
-            if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
-                throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
-            
-            var userImplementation = Activator.CreateInstance(typeof(TImplementation));
-            if (userImplementation is null) throw new Exception($"Provide at least an empty ctor for {typeof(TImplementation).Name}");
-            
-            _services[typeof(TInterface)] = new Service()
-            {
-                TypeOfInterface = typeof(TInterface),
-                TypeOfImplementation = typeof(TImplementation),
-                Implementation = userImplementation,
-                Life = Life.Singleton
-            };
-        }
-
-        public void RegisterTransient<TInterface, TImplementation>()
-        {
-            if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
-                throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
-            
-            _services[typeof(TInterface)] = new Service()
-            {
-                TypeOfInterface = typeof(TInterface),
-                TypeOfImplementation = typeof(TInterface),
-                Implementation = null,
-                Life = Life.Transient
-            };
         }
     }
 }

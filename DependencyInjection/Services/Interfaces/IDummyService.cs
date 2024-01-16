@@ -9,5 +9,7 @@ namespace DependencyInjection.Services.Interfaces
     public interface IDummyService
     {
         public void PrintStoredNumber();
+        public void Refresh();
+        public void TotalRefreshes();
     }
 }

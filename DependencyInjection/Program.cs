@@ -10,19 +10,22 @@ namespace DependencyInjection
     {
         static void Main(string[] args)
         {
-            var services = new DIProvider();
+            var container = new DIContainer();
+            var services = container.GetProvider();
+
             //ProveSingletonWithImplementation(services);
-            //ProveTransient(services);
             //ProveSingletonWithoutImplemenation(services);
-            ProveSingletonWithInterface(services);
+            //ProveTransient(services);
+            ProveSingletonWithInterface(container);
             //Futher Singleton Things
         }
 
-        public static void ProveSingletonWithImplementation(DIProvider services)
+        public static void ProveSingletonWithImplementation(DIContainer container)
         {
             var fooServiceSingleton = new FooService();
 
-            services.RegisterSingleton<FooService>(fooServiceSingleton);
+            container.RegisterSingleton<FooService>(fooServiceSingleton);
+            var services = container.GetProvider();
 
             //since its singleton, should be the same time
             var service = services.GetService<FooService>();
@@ -34,13 +37,28 @@ namespace DependencyInjection
 
             Console.WriteLine("");
         }
+        
+        public static void ProveSingletonWithoutImplemenation(DIContainer container)
+        {
+            Console.WriteLine("------Singleton without implementation------");
+            //singleton, without providing implemenation
+            container.RegisterSingleton<HooService>();
+            var services = container.GetProvider();
 
-        public static void ProveTransient(DIProvider services)
+            var hooService1 = services.GetService<HooService>();
+            var hooService2 = services.GetService<HooService>();
+
+            Console.WriteLine(hooService1.RandomGuid);
+            Console.WriteLine(hooService2.RandomGuid);
+        }
+
+        public static void ProveTransient(DIContainer container)
         {
             Console.WriteLine("----------------Transient-------------------");
 
             //since transient, should be two differnet Guids
-            services.RegisterTransient<GooService>();
+            container.RegisterTransient<GooService>();
+            var services = container.GetProvider();
             var gooServiceTransient1 = services.GetService<GooService>();
             var gooServiceTransient2 = services.GetService<GooService>();
 
@@ -52,28 +70,26 @@ namespace DependencyInjection
 
         }
 
-        public static void ProveSingletonWithoutImplemenation(DIProvider services)
+        public static void ProveSingletonWithInterface(DIContainer container)
         {
-            Console.WriteLine("------Singleton without implementation------");
-            //singleton, without providing implemenation
-            services.RegisterSingleton<HooService>();
-
-            var hooService1 = services.GetService<HooService>();
-            var hooService2 = services.GetService<HooService>();
-
-            Console.WriteLine(hooService1.RandomGuid);
-            Console.WriteLine(hooService2.RandomGuid);
-        }
-
-        public static void ProveSingletonWithInterface(DIProvider services)
-        {
-
-            services.RegisterSingleton<IDummyService, DummyOneService>();
+            container.RegisterSingleton<IDummyService, DummyOneService>();
+            var services = container.GetProvider();
             var dummyService1 = services.GetService<IDummyService>();
             var dummyService2 = services.GetService<IDummyService>();
 
+            Console.WriteLine("Before:");
             dummyService1.PrintStoredNumber();
-            dummyService2.PrintStoredNumber();
+            dummyService1.TotalRefreshes();
+
+
+          
+            dummyService2.Refresh(); //since it is a singleton, it should also affect dummyService1
+            dummyService2.Refresh();
+
+
+            Console.WriteLine("After:");
+            dummyService1.PrintStoredNumber();
+            dummyService1.TotalRefreshes();
 
         }
     }
