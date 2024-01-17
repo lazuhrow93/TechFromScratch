@@ -51,11 +51,8 @@ namespace DependencyInjection.Tools
             if (success == false) throw new Exception($"The {typeof(T).Name} is already registered as Singleton");
         }
 
-        public void RegisterSingleton<TInterface, TImplementation>() where TImplementation : class 
+        public void RegisterSingleton<TInterface, TImplementation>() where TImplementation : TInterface 
         {
-            if (typeof(TImplementation).GetInterfaces().Contains(typeof(TInterface)) == false)
-                throw new Exception($"{typeof(TImplementation).Name} does not implement {typeof(TInterface).Name}");
-
             _services[typeof(TInterface)] = new Service()
             {
                 TypeOfInterface = typeof(TInterface),
