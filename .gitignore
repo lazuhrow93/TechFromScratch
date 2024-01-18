@@ -9,3 +9,5 @@
 /DependencyInjection/DependencyInjection.sln
 /DependencyInjection/DependencyInjection.csproj
 /DependencyInjection/.vs/ProjectEvaluation
+/UnitTests/obj
+/UnitTests/bin/Debug/net6.0
