@@ -1,8 +1,8 @@
 ﻿using DependencyInjection.Tools;
 using DependencyInjection.Services;
 using System;
-using DependencyInjection.Services.Interfaces;
-using DependencyInjection.Services.Implementations;
+using MyClasses.Implementations;
+using MyClasses.Interaces;
 
 namespace DependencyInjection
 {

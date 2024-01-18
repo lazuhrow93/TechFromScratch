@@ -12,8 +12,8 @@ namespace UnitTests
         public void GetSingleton_Should_BeSameObject()
         {
             var container = new DIContainer();
-            container.RegisterSingleton<IDummyService, DummyTwoService>();
             container.RegisterSingleton<IRandomGuidProvider, RandomGuidProvider>();
+            container.RegisterSingleton<IDummyService, DummyTwoService>();
             var provider = container.GetProvider();
 
             var firstObject = provider.GetService<IDummyService>();

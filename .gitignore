@@ -12,3 +12,6 @@
 /UnitTests/obj
 /UnitTests/bin/Debug/net6.0
 /DependencyInjection/.vs/TechFromScratch/v17
+/MyClasses/obj/Debug/net6.0
+/MyClasses/bin/Debug/net6.0
+/MyClasses/obj
