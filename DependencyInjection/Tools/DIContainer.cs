@@ -10,7 +10,7 @@ namespace DependencyInjection.Tools
     {
         public Dictionary<Type, Service> _services = new();
 
-        public DIProvider DIProvider { get; set; }
+        private DIProvider DIProvider { get; set; }
 
         public DIContainer()
         {

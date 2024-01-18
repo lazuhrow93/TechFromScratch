@@ -34,7 +34,7 @@
 
             var basicCtor = serviceInfo.TypeOfImplementation.GetConstructors().First(); //how do we determine which one we want? First one for now
             var paramTypes = basicCtor.GetParameters();
-            var paramInstances = paramTypes.Select(p => GetServiceInstance(p.GetType())); //eventually youll hit a ctor without params
+            var paramInstances = paramTypes.Select(p => GetServiceInstance(p.ParameterType)); //eventually youll hit a ctor without params
 
             var instance = Activator.CreateInstance(typeOfImplementation, paramInstances);
             if(isSingleton) serviceInfo.Implementation = instance;

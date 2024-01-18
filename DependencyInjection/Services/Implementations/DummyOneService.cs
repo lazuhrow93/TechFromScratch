@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DependencyInjection.Services.Implementations
 {
-    internal class DummyOneService : IDummyService
+    public class DummyOneService : IDummyService
     {
         public int Randomized { get; set; } = 0;
         private Guid Guid { get; set; } = Guid.NewGuid();
