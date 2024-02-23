@@ -1,5 +1,5 @@
-using DependencyInjection.Services.Interfaces;
-using DependencyInjection.Services.Implementations;
+using MyClasses.Interfaces;
+using MyClasses.Implementations;
 using DependencyInjection.Tools;
 using FluentAssertions;
 

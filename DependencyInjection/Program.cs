@@ -2,7 +2,7 @@
 using DependencyInjection.Services;
 using System;
 using MyClasses.Implementations;
-using MyClasses.Interaces;
+using MyClasses.Interfaces;
 
 namespace DependencyInjection
 {

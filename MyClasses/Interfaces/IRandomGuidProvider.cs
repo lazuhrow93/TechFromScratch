@@ -1,4 +1,4 @@
-﻿namespace DependencyInjection.Services.Interfaces
+﻿namespace MyClasses.Interfaces
 {
     public interface IRandomGuidProvider
     {

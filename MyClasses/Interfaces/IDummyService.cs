@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DependencyInjection.Services.Interfaces
+namespace MyClasses.Interfaces
 {
     public interface IDummyService
     {

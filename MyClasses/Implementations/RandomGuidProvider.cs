@@ -1,14 +1,9 @@
-﻿using DependencyInjection.Services.Interfaces;
+﻿using MyClasses.Interfaces;
 
-namespace DependencyInjection.Services.Implementations
+namespace MyClasses.Implementations
 {
     public class RandomGuidProvider : IRandomGuidProvider
     {
-        public RandomGuidProvider()
-        {
-            
-        }
-
         public Guid RandomGuid { get; set; } = Guid.NewGuid();
     }
 }
